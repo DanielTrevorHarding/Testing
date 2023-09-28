@@ -9,11 +9,14 @@ dbUtils.executeQuery = jest.fn();
 describe('getNewEvent', () => {
   it('should return 200', async () => {
     const mockActiveEventData = { id: 1, word: 'mockedWord', active: 1 };
-    dbUtils.executeQuery.mockResolvedValue(mockActiveEventData);
+    dbUtils.executeQuery.mockResolvedValue([mockActiveEventData]);
 
     const response = await request(app).get('/Game/GetChallenge').set('content-type', 'application/json').send();
 
     expect(response.status).toBe(200);
     expect(await response.body).toStrictEqual({'word' : 'mockedWord'});
+    expect(dbUtils.executeQuery).toHaveBeenCalledTimes(1);
+    expect(authUtils.isLoggedIn).toHaveBeenCalledTimes(1);
+
   });
 });
