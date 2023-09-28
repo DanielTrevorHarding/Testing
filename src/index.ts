@@ -1,13 +1,16 @@
-import { Request, Response} from "express";
-import {CalculateBMI, CalculateBMR, CalculateBodyFat} from "./Services/CalculatorService";
-import {getErrorMessage} from "./util";
+import { Request, Response} from 'express';
+import {CalculateBMI, CalculateBMR, CalculateBodyFat} from './Services/CalculatorService';
+import {getErrorMessage} from './util';
 
-const express = require('express')
-const app = express()
+const express = require('express');
+const path = require('path');
+const app = express();
+
+app.use('/public', express.static(path.join(__dirname, 'public')));
 
 const PORT = 8000;
 
-app.get("/calculator/bmi", (req:Request, res:Response)=>{
+app.get('/calculator/bmi', (req:Request, res:Response)=>{
 
   try {
     const weight = parseInt(req?.query?.weight as string)
@@ -19,7 +22,7 @@ app.get("/calculator/bmi", (req:Request, res:Response)=>{
   }
 })
 
-app.get("/calculator/bmr", (req:Request, res:Response)=>{
+app.get('/calculator/bmr', (req:Request, res:Response)=>{
 
   try {
     const weight = parseInt(req?.query?.weight as string)
@@ -33,7 +36,7 @@ app.get("/calculator/bmr", (req:Request, res:Response)=>{
   }
 })
 
-app.get("/calculator/bodyfat", (req:Request, res:Response)=>{
+app.get('/calculator/bodyfat', (req:Request, res:Response)=>{
 
   try {
     const weight = parseInt(req?.query?.weight as string)
@@ -51,11 +54,14 @@ app.get("/calculator/bodyfat", (req:Request, res:Response)=>{
   }
 })
 
-app.get('/', (req: Request ,res: Response) => {
-  res.status(200)
-  res.json({'message': "shit is fucked"})
-
+app.get('/results', (req:Request, res:Response) => {
+  res.sendFile(path.join(__dirname, '/public/results.html'))
 })
+
+app.get('/', (req: Request ,res: Response) => {
+  res.sendFile(path.join(__dirname, '/public/index.html'))
+})
+
 app.listen(PORT, () => {
-  console.log('This shit is running now')
+  console.log(`Running on http://localhost:${PORT}`)
 })

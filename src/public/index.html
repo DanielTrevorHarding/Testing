@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+
+    <title>
+      BMI Calculator
+    </title>
+
+    <link rel="stylesheet" href="public/global.css">
+    
+  </head>
+  <body>
+
+    
+    <form
+      method="get"
+      action="/results">
+      
+      <h1>
+
+        Bad Health Calculator
+      </h1>
+
+      <label
+        for="age">
+
+        Age
+        
+        <input
+          name="age"
+          id="age"
+          type="number"
+          required/>
+      </label>
+
+      <label
+        for="weight">
+
+        Weight (kg)
+        
+        <input
+          name="weight"
+          id="weight"
+          type="number"
+          required/>
+      </label>
+
+      <label
+        for="height">
+
+        Height (cm)
+        
+        <input
+          name="height"
+          id="height"
+          type="number"
+          required/>
+      </label>
+      
+      <label
+        for="waist">
+
+        Waist (cm)
+        
+        <input
+          name="waist"
+          id="waist"
+          type="number"
+          required/>
+      </label>
+
+      <label
+        for="hip">
+
+        Hip (cm)
+        
+        <input
+          name="hip"
+          id="hip"
+          type="number"
+          required/>
+      </label>
+
+      <label
+        for="neck">
+
+        Neck (cm)
+        
+        <input
+          name="neck"
+          id="neck"
+          type="number"
+          required/>
+      </label>
+      
+      <label
+        for="gender">
+
+        Gender
+        
+        <select
+          name="gender"
+          id="gender"
+          required>
+
+          <option
+            value="male">
+
+            Male
+          </option>
+
+          <option
+            value="female">
+
+            Female
+          </option>
+        </select>
+      </label>
+
+      <button 
+        id="click-me"
+        type="submit">
+         
+        Submit
+      </button>
+    </form>
+  </body>
+</html>
