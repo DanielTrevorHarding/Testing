@@ -7,6 +7,8 @@ from selenium.webdriver.support.select import Select
 import tracemalloc
 
 url = "http://localhost:8000/"
+homePage = "BMI Calculator"
+resultsPage= "BMI Results"
 
 class Test(unittest.TestCase):
 
@@ -17,23 +19,27 @@ class Test(unittest.TestCase):
         print("test_loads_correct_page")
         driver = self.driver
         driver.get(url)
-        self.assertEqual("BMI Calculator", driver.title, "Entry page is not correct")
+        self.assertEqual(homePage, driver.title, "Entry page is not correct")
+        time.sleep(1)
         print("SUCCEEDED")
 
     def test_loads_results_page(self):
         print("test_loads_results_page")
         driver = self.driver
         driver.get(url + "results")
-        self.assertEqual("BMI Results", driver.title, "Results page is not correct")
+        self.assertEqual(resultsPage, driver.title, "Results page is not correct")
+        time.sleep(1)
         print("SUCCEEDED")
         
     def test_navigates_back_to_root(self):
         print("test_navigates_back_to_root")
         driver = self.driver
         driver.get(url + "results")
+        time.sleep(1)
         again_button = driver.find_element(By.XPATH, "//button[@id='again']")
         again_button.click()
-        self.assertEqual("BMI Calculator", driver.title, "Did not navigate back to home page")
+        self.assertEqual(homePage, driver.title, "Did not navigate back to home page")
+        time.sleep(1)
         print("SUCCEEDED")
 
     def test_valid_input_and_output(self):
@@ -59,6 +65,7 @@ class Test(unittest.TestCase):
 
         # Get all inputs
         for key in input_values:
+            time.sleep(0.25)
             if key == "gender":
                 input_element = Select(driver.find_element(By.XPATH, "//select[@id='gender']"))
                 input_element.select_by_value(input_values[key])
@@ -69,11 +76,12 @@ class Test(unittest.TestCase):
         submit_button = driver.find_element(By.XPATH, "//button[@id='click-me']")
         submit_button.click()
 
-        self.assertEqual("BMI Results", driver.title, "Did not navigate to the results page")
+        self.assertEqual(resultsPage, driver.title, "Did not navigate to the results page")
         for key in expected_values:
             result = driver.find_element(By.XPATH, "//p[@id='{}']".format(key))
             self.assertEqual(result.text.split(" ")[1], expected_values[key], "Results don't match expected results")
 
+        time.sleep(1)
         print("SUCCEEDED")
 
     def test_invalid_input_does_not_navigate(self):
@@ -91,9 +99,9 @@ class Test(unittest.TestCase):
             "gender": "female"
         }
 
-
         # Get all inputs
         for key in input_values:
+            time.sleep(0.25)
             if key == "gender":
                 input_element = Select(driver.find_element(By.XPATH, "//select[@id='gender']"))
                 input_element.select_by_value(input_values[key])
@@ -104,7 +112,8 @@ class Test(unittest.TestCase):
         submit_button = driver.find_element(By.XPATH, "//button[@id='click-me']")
         submit_button.click()
 
-        self.assertEqual("BMI Calculator", driver.title, "Navigated away with incorrect data")
+        self.assertEqual(homePage, driver.title, "Navigated away with incorrect data")
+        time.sleep(1)
         print("SUCCEEDED")
 
     def tearDown(self):
